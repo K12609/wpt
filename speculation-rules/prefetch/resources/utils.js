@@ -11,9 +11,13 @@ class PrefetchAgent extends RemoteContext {
     this.t = t;
   }
 
-  getExecutorURL(extra = {}) {
+  getExecutorURL(hostname = null, extra = {}) {
     let params = new URLSearchParams({uuid: this.context_id, ...extra});
-    return new URL(`executor.sub.html?${params}`, SR_PREFETCH_UTILS_URL);
+    let base = new URL(SR_PREFETCH_UTILS_URL);
+    if(hostname!=null) {
+      base.hostname = hostname;
+    }
+    return new URL(`executor.sub.html?${params}`, base.href);
   }
 
   // Requests prefetch via speculation rules.
@@ -21,11 +25,11 @@ class PrefetchAgent extends RemoteContext {
   // In the future, this should also use browser hooks to force the prefetch to
   // occur despite heuristic matching, etc., and await the completion of the
   // prefetch.
-  async forceSinglePrefetch(url) {
-    await this.execute_script((url) => {
-      insertSpeculationRules({ prefetch: [{source: 'list', urls: [url]}] });
-    }, [url]);
-    return new Promise(resolve => this.t.step_timeout(resolve, 2000));
+  async forceSinglePrefetch(url, extra = {}) {
+    await this.execute_script((url, extra) => {
+      insertSpeculationRules({ prefetch: [{source: 'list', urls: [url], ...extra}] });
+    }, [url, extra]);
+    return new Promise(resolve => this.t.step_timeout(resolve, 3000));
   }
 
   async navigate(url) {

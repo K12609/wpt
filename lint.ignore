@@ -826,3 +826,6 @@ SET TIMEOUT: editing/crashtests/insertorderedlist-in-text-adopted-to-other-docum
 SET TIMEOUT: editing/crashtests/make-editable-div-inline-and-set-contenteditable-of-input-to-false.html
 SET TIMEOUT: editing/crashtests/outdent-across-svg-boundary.html
 SET TIMEOUT: editing/crashtests/textarea-will-be-blurred-by-focus-event-listener.html
+
+# speculation-ruls based prefetch tests
+WEB-PLATFORM.TEST:speculation-rules/prefetch/anonymous-client.https.html:12

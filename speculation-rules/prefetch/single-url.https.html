@@ -16,5 +16,5 @@ promise_test(async t => {
   let requestHeaders = await agent.getRequestHeaders();
   assert_in_array(requestHeaders.purpose, ["", "prefetch"], "The vendor-specific header Purpose, if present, must be 'prefetch'.");
   assert_equals(requestHeaders.sec_purpose, "prefetch");
-}, "test single url prefetch");
+}, "test single url prefetch with https scheme");
 </script>
